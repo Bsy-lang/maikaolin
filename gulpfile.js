@@ -1,4 +1,8 @@
-const {src,dest,watch} = require('gulp');
+const {
+    src,
+    dest,
+    watch
+} = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const sass = require('gulp-sass');
@@ -8,47 +12,51 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 
 //indexhtml
-function fnCopyIndex(){
+function fnCopyIndex() {
     return src('./src/index.html')
-    .pipe(dest('./dist'));
+        .pipe(dest('./dist'));
 }
 //css
-function fnCSS(){
+function fnCSS() {
     return src('./src/sass/*.scss')
-    .pipe(sass())
-    .pipe(cssnano())
-    .pipe(rename({suffix : '.min'}))
-    .pipe(dest('./dist/css'));
+        .pipe(sass())
+        .pipe(cssnano())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(dest('./dist/css'));
 }
 //js
-function fnJS(){
+function fnJS() {
     return src('./src/js/*.js')
-    .pipe(babel({
-        presets : ['@babel/env']
-    }))
-    .pipe(uglify())
-    .pipe(rename({suffix : '.min'}))
-    .pipe(dest('./dist/js'));
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(dest('./dist/js'));
 }
 //html
-function fnHTML(){
+function fnHTML() {
     return src('./src/pages/*.html')
-    .pipe(htmlmin())
-    .pipe(dest('./dist/pages'));
+        .pipe(htmlmin())
+        .pipe(dest('./dist/pages'));
 }
 //img
-function fnIMG(){
+function fnIMG() {
     return src('./src/img/*')
-    .pipe(imagemin())
-    .pipe(dest('./dist/img'));
+        .pipe(imagemin())
+        .pipe(dest('./dist/img'));
 }
 //watch
-function fnWatch(){
-    watch('./src/img/*',fnIMG);
-    watch('./src/js/*.js',fnJS);
-    watch('./src/pages/*.html',fnHTML);
-    watch('./src/sass/*.scss',fnCSS);
-    watch('./src/index.html',fnCopyIndex);
+function fnWatch() {
+    watch('./src/img/*', fnIMG);
+    watch('./src/js/*.js', fnJS);
+    watch('./src/pages/*.html', fnHTML);
+    watch('./src/sass/*.scss', fnCSS);
+    watch('./src/index.html', fnCopyIndex);
 }
 exports.img = fnIMG;
 exports.js = fnJS;
